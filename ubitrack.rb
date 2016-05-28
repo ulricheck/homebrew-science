@@ -13,7 +13,6 @@ class Ubitrack < Formula
   sha256 ""
 
   option :cxx11
-  # option :libcxx
 
   depends_on "cmake"      => :build
   depends_on :java        => :optional
@@ -24,13 +23,8 @@ class Ubitrack < Formula
   depends_on "zmq"     => :build
   depends_on "glfw3"     => :build
 
-  def arg_switch(opt)
-    (build.with? opt) ? "ON" : "OFF"
-  end
-
   def install
     ENV.cxx11 if build.cxx11?
-    # -stdlib=libc++
     ENV.libcxx if build.cxx11?
     dylib = OS.mac? ? "dylib" : "so"
 
@@ -43,8 +37,8 @@ class Ubitrack < Formula
       -DENABLE_DTRACE=ON
       -DUT_ENABLE_DTRACE=ON
     ]
-    args << "-DCOMPILE_WITH_CXX11="   + arg_switch("cxx11")
-    args << "-DENABLE_BASICFACADE="   + arg_switch("cxx11")
+    args << "-DCOMPILE_WITH_CXX11=ON"  if build.cxx11?
+    args << "-DENABLE_BASICFACADE=ON"  if build.cxx11?
 
     system "git", "submodule", "deinit", "-f", "modules/artdriver" 
     system "git", "submodule", "deinit", "-f", "modules/mswindows" 
