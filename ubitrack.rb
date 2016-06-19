@@ -8,7 +8,7 @@ end
 class Ubitrack < Formula
   desc "The UbiTrack Framework from TUM/FAR"
   homepage "http://campar.in.tum.de"
-  version "1.0.0"
+  version "1.3.0"
   url "git@intern.far.in.tum.de:Ubitrack/buildEnvironment.git", :using => UbitrackDownloadStrategy, :branch => "release_13"
   sha256 ""
 
