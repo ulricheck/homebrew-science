@@ -47,6 +47,7 @@ class Ubitrack < Formula
 
     system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/ARTDriver.git", "modules/art"
     system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/FirewireCameraDriver.git", "modules/firewirecamera"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/QTKitCaptureDriver.git", "modules/qtkitcapture"
     system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utComponents.git", "modules/utcomponents"
     system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utCore.git", "modules/utcore"
     system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/HapticCalibrationComponents.git", "modules/uthaptics"
