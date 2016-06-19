@@ -11,7 +11,9 @@ class Opencv3ut < Formula
     end
   end
 
-  keg_only "opencv3 and opencv install many of the same files."
+  # keg_only "opencv3 and opencv install many of the same files."
+  conflicts_with "opencv", :because => "both versions install the same binaries"
+  conflicts_with "opencv3", :because => "both versions install the same binaries"
 
   deprecated_option "without-tests" => "without-test"
 
