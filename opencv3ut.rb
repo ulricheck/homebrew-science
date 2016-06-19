@@ -4,7 +4,7 @@ class Opencv3ut < Formula
   revision 3
 
   head do
-    url "https://github.com/ulricheck/opencv.git"
+    url "https://github.com/ulricheck/opencv.git", :branch => "feature_enable_shared_ocl_context"
 
     resource "contrib" do
       url "https://github.com/Itseez/opencv_contrib.git"
@@ -80,6 +80,7 @@ class Opencv3ut < Formula
   end
 
   def install
+
     ENV.cxx11 if build.cxx11?
     jpeg = Formula["jpeg"]
     dylib = OS.mac? ? "dylib" : "so"
@@ -121,6 +122,7 @@ class Opencv3ut < Formula
 
     if build.with? "cuda"
       args << "-DWITH_CUDA=ON"
+      args << "-DCUDA_ARCH_BIN=3.0"
       args << "-DCUDA_GENERATION=Kepler"
     else
       args << "-DWITH_CUDA=OFF"
