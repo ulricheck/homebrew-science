@@ -9,19 +9,21 @@ class Ubitrack < Formula
   desc "The UbiTrack Framework from TUM/FAR"
   homepage "http://campar.in.tum.de"
   version "1.0.0"
-  url "git@intern.far.in.tum.de:Ubitrack/buildEnvironment.git", :using => UbitrackDownloadStrategy
+  url "git@intern.far.in.tum.de:Ubitrack/buildEnvironment.git", :using => UbitrackDownloadStrategy, :branch => "release_13"
   sha256 ""
 
   option :cxx11
 
   depends_on "cmake"      => :build
   depends_on :java        => :optional
-  depends_on "opencv"     => :build
+  depends_on "opencv3ut"     => :build
   depends_on "boost"     => :build
   depends_on "tbb"     => :build
   depends_on "swig"     => :build
   depends_on "zmq"     => :build
   depends_on "glfw3"     => :build
+
+  # depends_on "python"    => :build
 
   def install
     ENV.cxx11 if build.cxx11?
@@ -40,29 +42,18 @@ class Ubitrack < Formula
     args << "-DCOMPILE_WITH_CXX11=ON"  if build.cxx11?
     args << "-DENABLE_BASICFACADE=ON"  if build.cxx11?
 
-    system "git", "submodule", "deinit", "-f", "modules/artdriver" 
-    system "git", "submodule", "deinit", "-f", "modules/mswindows" 
-    system "git", "submodule", "deinit", "-f", "modules/utcomponents" 
-    system "git", "submodule", "deinit", "-f", "modules/utcore" 
-    system "git", "submodule", "deinit", "-f", "modules/utdataflow" 
-    system "git", "submodule", "deinit", "-f", "modules/utfacade" 
-    system "git", "submodule", "deinit", "-f", "modules/utvision" 
-    system "git", "submodule", "deinit", "-f", "modules/utvisioncomponents" 
-    system "git", "submodule", "deinit", "-f", "modules/utvisualization" 
-    system "rm", "-Rf", "modules/*"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utDataflow.git", "modules/utdataflow"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utFacade.git", "modules/utfacade"
 
-    system "git", "clone", "-b", "multiple_eventqueues", "git@intern.far.in.tum.de:Ubitrack/utDataflow.git", "modules/utdataflow"
-    system "git", "clone", "-b", "multiple_eventqueues", "git@intern.far.in.tum.de:Ubitrack/utFacade.git", "modules/utfacade"
-
-    system "git", "clone", "git@intern.far.in.tum.de:UbitrackContrib/ARTDriver.git", "modules/art"
-    system "git", "clone", "git@intern.far.in.tum.de:UbitrackContrib/FirewireCameraDriver.git", "modules/firewirecamera"
-    system "git", "clone", "git@intern.far.in.tum.de:Ubitrack/utComponents.git", "modules/utcomponents"
-    system "git", "clone", "git@intern.far.in.tum.de:Ubitrack/utCore.git", "modules/utcore"
-    system "git", "clone", "git@intern.far.in.tum.de:UbitrackContrib/HapticCalibrationComponents.git", "modules/uthaptics"
-    system "git", "clone", "git@intern.far.in.tum.de:Ubitrack/utVision.git", "modules/utvision"
-    system "git", "clone", "git@intern.far.in.tum.de:Ubitrack/utVisionComponents.git", "modules/utvisioncomponents"
-    system "git", "clone", "git@intern.far.in.tum.de:Ubitrack/utVisualization.git", "modules/utvisualization"
-    system "git", "clone", "git@intern.far.in.tum.de:UbitrackContrib/ZMQ.git", "modules/utzmq"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/ARTDriver.git", "modules/art"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/FirewireCameraDriver.git", "modules/firewirecamera"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utComponents.git", "modules/utcomponents"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utCore.git", "modules/utcore"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/HapticCalibrationComponents.git", "modules/uthaptics"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utVision.git", "modules/utvision"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utVisionComponents.git", "modules/utvisioncomponents"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:Ubitrack/utVisualization.git", "modules/utvisualization"
+    system "git", "clone", "-b", "release_13", "git@intern.far.in.tum.de:UbitrackContrib/ZMQ.git", "modules/utzmq"
 
 
     mkdir "macbuild" do
